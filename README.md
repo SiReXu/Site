@@ -42,7 +42,7 @@ skyborn-site/
 
 ## 🌐 GitHub Pages
 
-Сайт доступен по адресу: https://[SRX].github.io/[site]
+Сайт доступен по адресу: https://sirexu.github.io/Site/
 
 Как опубликовать:
 1. Загрузите все файлы в репозиторий так, чтобы `index.html` лежал в корне.
