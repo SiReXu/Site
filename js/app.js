@@ -32,7 +32,8 @@ function buildShell() {
     <div class="tl"><button class="icon-btn" id="menuBtn" aria-label="Меню">☰</button>
       <a class="brand" href="index.html"><span class="logo">${FLOWER}</span><span>SKYBORN</span></a></div>
     <div class="tr"><a class="toplink" href="members.html">Состав</a>
-      <a class="icon-btn" href="rules.html" title="Правила">📜</a>
+      <button class="icon-btn" id="searchBtn" title="Поиск по странице" aria-label="Поиск">🔎</button>
+      <button class="icon-btn" id="themeBtn" title="Тёмная / светлая тема" aria-label="Сменить тему">🌙</button>
       <a class="userpill" href="join.html"><span class="av">✿</span><span><b>Вступить</b><small>подать заявку</small></span></a></div>`;
   const scrim = el('div', { class: 'scrim' });
   const dr = el('aside', { class: 'drawer' });
@@ -106,4 +107,43 @@ function initApply() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => { buildShell(); petals(); initMembers(); initApply(); reveal(); });
+// тёмная / светлая тема (запоминается в браузере)
+function initTheme() {
+  let t = null;
+  try { t = localStorage.getItem('theme'); } catch {}
+  if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  const btn = $('#themeBtn');
+  const apply = v => {
+    document.documentElement.setAttribute('data-theme', v);
+    btn.textContent = v === 'light' ? '☀️' : '🌙';
+    try { localStorage.setItem('theme', v); } catch {}
+  };
+  apply(t);
+  btn.onclick = () => apply(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+}
+
+// поиск по содержимому текущей страницы: скрывает карточки, где нет совпадений
+function initSearch() {
+  const inp = el('input', { type: 'search', placeholder: 'Поиск по странице…', 'aria-label': 'Поиск' });
+  const cnt = el('span', { class: 'cnt' });
+  const bar = el('div', { class: 'searchbar' }, inp, cnt);
+  $('.topbar').after(bar);
+  const run = () => {
+    const q = inp.value.trim().toLowerCase(); let n = 0;
+    $$('main .card').forEach(c => {
+      if (c.querySelector('form')) return;
+      const hit = !q || c.textContent.toLowerCase().includes(q);
+      c.classList.toggle('hide', !hit); if (hit) n++;
+    });
+    cnt.textContent = q ? (n ? `Найдено: ${n}` : 'Ничего не найдено') : '';
+  };
+  const toggle = open => {
+    bar.classList.toggle('open', open);
+    if (open) inp.focus(); else { inp.value = ''; run(); }
+  };
+  inp.addEventListener('input', run);
+  $('#searchBtn').onclick = () => toggle(!bar.classList.contains('open'));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && bar.classList.contains('open')) toggle(false); });
+}
+
+document.addEventListener('DOMContentLoaded', () => { buildShell(); initTheme(); initSearch(); petals(); initMembers(); initApply(); reveal(); });

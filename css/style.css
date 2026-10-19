@@ -144,4 +144,30 @@ footer{position:relative;z-index:2;text-align:center;color:var(--muted);font-siz
   .tr .toplink,.userpill small{display:none}
   .intro{margin-top:-70px}
 }
+/* ---------- поиск ---------- */
+.searchbar{position:sticky;top:72px;z-index:49;display:none;align-items:center;gap:12px;padding:10px 18px;
+  background:rgba(21,13,28,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.searchbar.open{display:flex}
+.searchbar input{max-width:520px}
+.searchbar .cnt{color:var(--muted);font-size:13px;white-space:nowrap}
+.hide{display:none!important}
+
+/* ---------- светлая тема ---------- */
+[data-theme=light]{--bg:#fff3f8;--bg2:#ffe6f0;--panel:rgba(255,255,255,.86);--text:#2a1233;--muted:#6f5a73;--line:rgba(176,34,95,.28);--pink:#d6246e;--pink2:#e0357f}
+[data-theme=light] body{background-image:radial-gradient(1200px 600px at 80% -10%,rgba(255,79,154,.25),transparent 60%),radial-gradient(900px 500px at -10% 40%,rgba(180,140,255,.3),transparent 60%)}
+[data-theme=light] .topbar,[data-theme=light] .searchbar{background:rgba(255,243,248,.9)}
+[data-theme=light] .brand,[data-theme=light] .toplink{color:#5a1c45}
+[data-theme=light] .drawer{background:linear-gradient(180deg,#fff,#ffe3ef)}
+[data-theme=light] .drawer a.item{background:rgba(255,255,255,.7);border-color:rgba(176,34,95,.15)}
+[data-theme=light] .icon-btn,[data-theme=light] .userpill,[data-theme=light] .tab,[data-theme=light] .btn.ghost{background:rgba(255,255,255,.65)}
+[data-theme=light] .btn.ghost{color:var(--text)}
+[data-theme=light] input,[data-theme=light] select,[data-theme=light] textarea{background:rgba(255,255,255,.85)}
+[data-theme=light] select option{background:#fff}
+[data-theme=light] label{color:#4a2a52}
+[data-theme=light] .card{box-shadow:0 12px 36px rgba(176,34,95,.16)}
+[data-theme=light] .msg.ok{color:#14573a}
+[data-theme=light] .toast{background:#fff}
+[data-theme=light] .scrim{background:rgba(60,20,50,.35)}
+[data-theme=light] .person .rk{color:var(--pink)}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
